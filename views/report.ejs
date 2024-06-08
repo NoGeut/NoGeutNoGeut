@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>보고서 작성</title>
+    <link href="/css/report.css?v=1.0" rel="stylesheet" type="text/css">
+    <script>
+        function openFileUploader() {
+            document.getElementById('fileInput').click();
+        }
+
+        function previewImage(event) {
+            document.getElementById('plusButton').style.display = "none";
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.getElementById('uploadImagePreview');
+                output.src = dataURL;
+                output.style.display = "block";
+                output.style.width = "90px";
+                output.style.height = "90px";
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <script src="js/date.js"></script>
+
+    <header class="header__container">
+        <h1 class="main-title">노긋메인홈</h1>
+        <div class="header__block">
+            <a href="#"> 마이페이지 </a>
+            <a href="#"> 로그인 </a>
+        </div>
+        <nav class="header__nav-block">
+            <ul class="nav__list" role="navigation">
+                <li class="nav__list-item">
+                    <a href="#" aria-label="노긋노긋 홈페이지">
+                        <img src="/images/logo.png" width="50px" alt="로고">
+                    </a>
+                </li>
+                <li class="nav__list-item"><a href="#"> 매칭하기 </a></li>
+                <li class="nav__list-item"><a href="#"> 채팅 </a></li>
+                <li class="nav__list-item"><a href="#"> 보고서작성 </a></li>
+                <li class="nav__list-item"><a href="#"> 후기작성 </a></li>
+                <li class="nav__list-item"><a href="#"> 보고서확인 </a></li>
+            </ul>
+        </nav>
+        <div class="side__nav-container">
+            <ul class="nav__list" role="navigation">
+                <li class="nav__review__list-item">
+                    <a href="#"> 예시 </a>
+                </li>
+                <li class="nav__review__list-item">
+                    <a href="#">보고서 목록</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div id="container" style="width: 900px; margin: auto;">
+        <div id="container1" style="background-color: white; width: 900px;">
+            <form action="/submit-report" method="post" enctype="multipart/form-data">
+                <div id="date" style="margin-left: 30px;">
+                    날짜 <input type="text" name="date" value="<%= promiseDate %>" required>
+                    시간 <input type="text" name="time" value="<%=  startTime %>" required>
+                </div>
+                <div id="name" style="margin-left: 30px;">
+                    <% if (promiseWithMemberName) { %>
+                        학생 이름 <input type="text" name="studentName" value="<%= promiseWithMemberName.studentName %>"
+                            required>
+                        <% } else { %>
+                            <p>약속 정보를 가져올 수 없습니다.</p>
+                            <% } %>
+                                노인 이름 <input type="text" name="elderlyName"
+                                    value="<%= promiseWithMemberName.seniorName %>" required>
+                                보호자 이름 <input type="text" name="guardianName"
+                                    value="<%= promiseWithMemberName.protectorName %>" required>
+
+                </div>
+
+                <div id="contents" style="margin-left: 30px;">
+                    <label for="reportContent">활동 내용:</label><br>
+                    <textarea id="reportContent" name="reportContent" rows="4" cols="50" required></textarea><br>
+                </div>
+
+                <div id="text" style="margin-left: 30px;">사진</div>
+                <div class="image-container"
+                    style="width: 700px; height: 300px; text-align: center; margin-left: 30px;">
+                    <input type="file" id="fileInput" name="reportMedia" accept="image/*" style="display: none;"
+                        onchange="previewImage(event)" required>
+                    <div id="reportMedia" onclick="openFileUploader()">
+                        <img id="plusButton" src="/images/plus.png"
+                            style="width: 30px; height: 30px; margin-top: 130px; cursor: pointer;">
+                    </div>
+                    <img id="uploadImagePreview"
+                        style="width: 90px; height: 90px; display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                </div>
+
+                <div class="button">
+                    <button type="submit">제출</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer__container">
+        <section class="pages__container">
+            <a href="#">이용약관</a>
+            <a href="#">개인정보처리방침</a>
+            <a href="#">커뮤니티이용규칙</a>
+            <a href="#">문의하기</a>
+        </section>
+    </footer>
+</body>
+
+</html>

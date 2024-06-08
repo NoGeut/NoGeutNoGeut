@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>보고서 작성</title>
+    <link href="/css/report1.css?v=1.0" rel="stylesheet" type="text/css">
+
+    <script>
+        function openFileUploader() {
+            document.getElementById('fileInput').click();
+        }
+
+        function previewImage(event) {
+            document.getElementById('plusButton').style.display = "none";
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.getElementById('uploadImagePreview');
+                output.src = dataURL;
+                output.style.display = "block";
+                output.style.width = "90px";
+                output.style.height = "90px";
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+</head>
+
+<body>
+    <header class="header__container">
+        <h1 class="main-title">노긋메인홈</h1>
+        <div class="header__block">
+            <a href="#"> 마이페이지 </a>
+            <a href="#"> 로그인 </a>
+        </div>
+        <nav class="header__nav-block">
+            <ul class="nav__list" role="navigation">
+                <li class="nav__list-item">
+                    <a href="#" aria-label="노긋노긋 홈페이지">
+                        <img src="/images/logo.png" width="50px" alt="로고">
+                    </a>
+                </li>
+                <li class="nav__list-item"><a href="#"> 매칭하기 </a></li>
+                <li class="nav__list-item"><a href="#"> 채팅 </a></li>
+                <li class="nav__list-item"><a href="#"> 보고서작성 </a></li>
+                <li class="nav__list-item"><a href="#"> 후기작성 </a></li>
+                <li class="nav__list-item"><a href="#"> 보고서확인 </a></li>
+            </ul>
+        </nav>
+        <div class="side__nav-container">
+            <ul class="nav__list" role="navigation">
+                <li class="nav__review__list-item">
+                    <a href="#"> 예시 </a>
+                </li>
+                <li class="nav__review__list-item">
+                    <a href="#">보고서 목록</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <body>
+
+        <div class="list-container">
+            <% reports.forEach(report=> { %>
+                <a href="/reportDetail/<%= report.reportNum %>">
+                    <div class="report-item">
+                        <div class="report-details">
+                            <span>보고서 번호: <%= report.reportNum %></span>
+                            <span>보고서 내용: <%= report.reportContent %></span>
+                            <span>작성일시: <%= report.createdAt %></span>
+                        </div>
+                    </div>
+                </a>
+
+                <% }); %>
+        </div>
+    </body>
+
+</html>

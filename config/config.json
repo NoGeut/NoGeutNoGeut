@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sort_user",
+    "password": "password",
+    "database": "sort",
+    "host": "34.64.198.53",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "sort_user",
+    "password": "password",
+    "database": "sort_test",
+    "host": "34.64.198.53",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sort_user",
+    "password": "password",
+    "database": "sort_production",
+    "host": "34.64.198.53",
+    "dialect": "mysql"
+  }
+}
