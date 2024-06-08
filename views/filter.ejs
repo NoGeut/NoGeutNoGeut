@@ -1,0 +1,63 @@
+<form id="filterForm" method="GET" action="/categories">
+  <nav class="chart">
+    <ul class="filter-list">
+      <li>
+        <label for="region">지역:</label>
+        <select id="region" name="region">
+          <option value="">선택하세요</option>
+          <option value="서울특별시">서울특별시</option>
+          <option value="부산광역시">부산광역시</option>
+          <option value="대구광역시">대구광역시</option>
+          <!-- Add more options here -->
+        </select>
+      </li>
+      <li>
+        <label for="city">구/군:</label>
+        <select id="city" name="city">
+          <option value="">선택하세요</option>
+        </select>
+      </li>
+      <li>
+        <label for="gender">성별:</label>
+        <select id="gender" name="gender">
+          <option value="">전체</option>
+          <option value="남성">남성</option>
+          <option value="여성">여성</option>
+        </select>
+      </li>
+      <li>
+        <label for="amount">금액:</label>
+        <select id="amount" name="amount">
+          <option value="">전체</option>
+          <option value="0">무료</option>
+          <option value="10000">1만원</option>
+          <option value="30000">3만원</option>
+          <option value="50000">5만원</option>
+        </select>
+      </li>
+      <li>
+        <label for="day">요일:</label>
+        <select id="day" name="day">
+          <option value="">전체</option>
+          <option value="월">월</option>
+          <option value="화">화</option>
+          <option value="수">수</option>
+          <option value="목">목</option>
+          <option value="금">금</option>
+          <option value="토">토</option>
+          <option value="일">일</option>
+        </select>
+      </li>
+      <li>
+        <label for="time">시간대:</label>
+        <select id="time" name="time">
+          <option value="">전체</option>
+          <option value="오전">오전</option>
+          <option value="오후">오후</option>
+          <option value="협의">협의</option>
+        </select>
+      </li>
+      <li><button id="searchButton" type="submit">검색</button></li>
+    </ul>
+  </nav>
+</form>
