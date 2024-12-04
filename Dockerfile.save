@@ -1,0 +1,33 @@
+# Base image
+FROM jenkins/jenkins:lts-jdk17
+
+# Root 권한 사용
+USER root
+
+# 필수 패키지 설치 및 Node.js 설치
+RUN apt-get update && apt-get install -y \
+    build-essential wget curl sudo apt-utils && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean
+
+# Docker 설치
+RUN wget -qO- https://get.docker.com/ | sh && \
+    usermod -aG docker jenkins
+
+# Jenkins 플러그인 사전 설치
+RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"
+
+# Node.js 프로젝트 디렉토리 설정
+WORKDIR /NogeutNogeut
+COPY . /NogeutNogeut
+
+# 프로젝트 의존성 설치
+RUN npm install
+
+# Jenkins 사용자로 전환
+USER jenkins
+
+# 컨테이너 실행 시 Jenkins와 Node.js 애플리케이션 실행
+ENTRYPOINT ["/bin/bash", "-c", "service docker start && exec java -jar /usr/share/jenkins/jenkins.war & node main.js"]
+
