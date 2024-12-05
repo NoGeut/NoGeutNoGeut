@@ -53,6 +53,10 @@ const promiseController = require('./controllers/promiseController');
 const app = express();
 app.set("port", process.env.PORT || 3030);
 
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 // 서버 생성
 const server = http.createServer(app);
 
