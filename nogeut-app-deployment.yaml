@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nogeut-app
+  labels:
+    app: nogeut-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nogeut-app
+  template:
+    metadata:
+      labels:
+        app: nogeut-app
+    spec:
+      containers:
+      - name: nogeut-app
+        image: yeonju7547/open2024:latest # Docker 이미지 (Jenkins에서 sed로 태그 교체됨)
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3030
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3030"
+        resources:
+          limits:
+            memory: "256Mi"  # 메모리 제한 증가
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: "/health" # 프로브 경로 수정 (앱에 맞게 조정)
+            port: 3030
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: "/health" # 프로브 경로 수정 (앱에 맞게 조정)
+            port: 3030
+          initialDelaySeconds: 5
+          periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nogeut-app
+  labels:
+    app: nogeut-app
+spec:
+  ports:
+  - port: 80             # 외부에서 접속할 포트
+    targetPort: 3030      # 컨테이너 내부 포트
+  selector:
+    app: nogeut-app       # Deployment와 연결될 레이블
+  type: LoadBalancer      # 외부에서 접근할 수 있도록 LoadBalancer 설정
+
